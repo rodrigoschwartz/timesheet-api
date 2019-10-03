@@ -6,3 +6,4 @@ class ValuesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Values
         fields = '__all__'
+        depth = 1
