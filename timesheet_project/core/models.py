@@ -16,7 +16,7 @@ class Project(models.Model):
     id = models.IntegerField(primary_key=True)
     demandCode = models.IntegerField(help_text="Enter a demand code")
     description = models.CharField(max_length=60, help_text="Enter project description")
-    #responsible = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     # dateStart = models.DateField(default=datetime.date)
     # dateEnd = models.DateField(default=datetime.date)
     value = models.DecimalField(
