@@ -15,9 +15,10 @@ class ProjectListAll(generics.ListAPIView):
 class ProjectListUser(generics.ListAPIView):
     serializer_class = ProjectSerializer
 
-    def get_queryset(self):
-        user = self.request.user
-        return Project.objects.filter(user=user)
+    @api_view(["GET"])
+    @permission_classes((IsAuthenticated,))
+    def get_queryset(request):
+        return Project.objects.filter(user=request.user)
 
 
 class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
