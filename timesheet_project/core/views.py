@@ -1,10 +1,11 @@
-from django.contrib.auth.models import User
 from django.shortcuts import render
-from rest_framework import status
+from django.contrib.auth.models import User
+from rest_framework import status, generics
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from .models import Project
 from .serializers import ProjectSerializer, UserSerializer
-from rest_framework import generics
 
 
 class ProjectListAll(generics.ListAPIView):
@@ -14,11 +15,13 @@ class ProjectListAll(generics.ListAPIView):
 
 class ProjectListUser(generics.ListAPIView):
     serializer_class = ProjectSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
     @api_view(["GET"])
-    @permission_classes((IsAuthenticated,))
     def get_queryset(request):
-        return Project.objects.filter(user=request.user)
+        username = unicode(request.user)
+        return Project.objects.filter(user=username)
 
 
 class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
