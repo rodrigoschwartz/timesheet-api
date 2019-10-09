@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from django.http import request
 from django.shortcuts import render
@@ -21,7 +22,7 @@ class ProjectListUser(generics.ListAPIView):
 
 @api_view(["GET"])
 def get_proj(request):
-    project = Project.objects.filter(user=request.user)
+    project = Project.objects.first()
     if project is None:
         return JsonResponse({"error": "No data found!"}, status=204)
     return JsonResponse(json.loads(project.json), safe=False)
