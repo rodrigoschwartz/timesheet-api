@@ -1,11 +1,12 @@
+from django.http import JsonResponse
+from django.http import request
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import status, generics
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from .models import Project
-from .serializers import ProjectSerializer, UserSerializer
+from .serializers import ProjectSerializer
 
 
 class ProjectListAll(generics.ListAPIView):
@@ -15,13 +16,15 @@ class ProjectListAll(generics.ListAPIView):
 
 class ProjectListUser(generics.ListAPIView):
     serializer_class = ProjectSerializer
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
-    @api_view(["GET"])
-    def get_queryset(request):
-        username = unicode(request.user)
-        return Project.objects.filter(user=username)
+
+@api_view(["GET"])
+def get_proj(request):
+    project = Project.objects.filter(user=request.user)
+    if project is None:
+        return JsonResponse({"error": "No data found!"}, status=204)
+    return JsonResponse(json.loads(project.json), safe=False)
 
 
 class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
