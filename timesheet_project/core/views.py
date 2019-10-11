@@ -8,26 +8,26 @@ from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from .models import Project
 from .serializers import ProjectSerializer
+from rest_framework.response import Response
 
 
 class ProjectListAll(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-
-
-class ProjectListUser(generics.ListAPIView):
-    serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
-
-
-@api_view(["GET"])
-def get_proj(request):
-    project = Project.objects.first()
-    if project is None:
-        return JsonResponse({"error": "No data found!"}, status=204)
-    return JsonResponse(json.loads(project.json), safe=False)
 
 
 class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ProjectListByUser(generics.ListAPIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        id = request.user.id
+        return Response(Project.objects.filter(user=id))
+

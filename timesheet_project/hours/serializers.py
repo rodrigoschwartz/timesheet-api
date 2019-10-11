@@ -8,4 +8,5 @@ class HoursSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hours
         fields = '__all__'
+        depth = 1
         
