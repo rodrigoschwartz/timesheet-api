@@ -24,10 +24,10 @@ class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ProjectListByUser(generics.ListAPIView):
-
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        id = request.user.id
-        return Response(Project.objects.filter(user=id))
+        projects = Project.objects.filter(user=request.user.id)
+        serializer = ProjectSerializer(projects, many=True)
+        return Response(serializer.data)
 
