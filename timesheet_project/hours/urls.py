@@ -4,5 +4,6 @@ from hours import views
 
 urlpatterns = [
     path('', views.HoursList.as_view()),
+    path('user/', views.HoursListByUser.as_view()),
     path('<int:pk>/', views.HoursDetail.as_view()),
 ]

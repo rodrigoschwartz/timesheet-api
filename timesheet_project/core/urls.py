@@ -3,6 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from core import views
 
 urlpatterns = [
-    path('', views.ProjectListByUser.as_view()),
+    path('', views.ProjectList.as_view()),
+    path('user/', views.ProjectListByUser.as_view()),
     path('<int:pk>/', views.ProjectDetail.as_view()),
 ]

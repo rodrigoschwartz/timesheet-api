@@ -18,3 +18,12 @@ class HoursDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Hours.objects.all()
     serializer_class = HoursSerializer
     permission_classes = [IsAuthenticated]
+
+
+class HoursListByUser(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        hours = Hours.objects.filter(user=request.user.id)
+        serializer = HoursSerializer(projects, many=True)
+        return Response(serializer.data)

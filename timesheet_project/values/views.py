@@ -17,3 +17,12 @@ class ValuesDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Values.objects.all()
     serializer_class = ValuesSerializer
     permission_classes = [IsAuthenticated]
+
+
+class ValuesListByUser(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        values = Values.objects.filter(user=request.user.id)
+        serializer = ValuesSerializer(projects, many=True)
+        return Response(serializer.data)

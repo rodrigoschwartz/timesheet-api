@@ -11,7 +11,7 @@ from .serializers import ProjectSerializer
 from rest_framework.response import Response
 
 
-class ProjectListAll(generics.ListAPIView):
+class ProjectList(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     permission_classes = [IsAuthenticated]
