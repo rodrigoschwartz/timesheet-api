@@ -48,7 +48,8 @@ class ProjectDelete(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
     
     def delete(self, request, format=None):
-        project = get_object_or_404(Project, id=request.data.get('project'))
+        return Response(request.data)
+        project = get_object_or_404(Project, id=request.data.get('id'))
         project.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
