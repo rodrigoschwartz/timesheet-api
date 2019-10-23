@@ -5,5 +5,6 @@ from core import views
 urlpatterns = [
     path('', views.ProjectList.as_view()),
     path('user/', views.ProjectListByUser.as_view()),
+    path('create/', views.ProjectCreate.as_view()),
     path('<int:pk>/', views.ProjectDetail.as_view()),
 ]
