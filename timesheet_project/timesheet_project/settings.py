@@ -1,5 +1,4 @@
 import os, datetime
-from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -71,11 +70,12 @@ WSGI_APPLICATION = 'timesheet_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-from dj_database_url import parse as dburl
-default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-
-DATABASES = { 'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation
@@ -131,5 +131,3 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
