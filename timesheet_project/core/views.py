@@ -1,5 +1,5 @@
 from .models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, UserSerializer
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.models import User
 from rest_framework import status, generics
@@ -42,3 +42,21 @@ class ProjectCreate(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class ProjectDelete(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, format=None):
+        project = get_object_or_404(Project, id=request.data.get('project'))
+        project.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+        
+        
