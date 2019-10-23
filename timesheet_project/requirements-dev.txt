@@ -3,7 +3,7 @@ dj-static==0.0.6
 Django==2.2.5
 django-cors-headers==3.1.1
 djangorestframework==3.10.3
-Pillow==6.0.0
+Pillow==6.2.0
 python-decouple==3.1
 pytz==2019.2
 static3==0.7.0
