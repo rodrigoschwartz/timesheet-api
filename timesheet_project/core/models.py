@@ -13,7 +13,7 @@ STATUS = (
 
 
 class Project(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     demandCode = models.IntegerField(help_text="Enter a demand code")
     description = models.CharField(max_length=60, help_text="Enter project description")
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
