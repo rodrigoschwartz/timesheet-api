@@ -1,1 +1,0 @@
-web: gunicorn timesheet_project.wsgi --log-file -
