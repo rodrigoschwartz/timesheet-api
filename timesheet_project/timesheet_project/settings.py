@@ -112,7 +112,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
+STATIC_URL = '/static/'
 
 
 REST_FRAMEWORK = {
@@ -131,4 +131,5 @@ JWT_AUTH = {
     'JWT_ALLOW_REFRESH': True,
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
