@@ -14,12 +14,6 @@ class ProjectList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class ProjectDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    permission_classes = [IsAuthenticated]
-
-
 class ProjectListByUser(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
@@ -59,4 +53,18 @@ class ProjectDelete(generics.DestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
         
+class ProjectUpdate(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = ''
+    
+    def update(self, request, format=None):
+        project = get_object_or_404(Project, id=request.data.get('project'))
+        status = request.data.get('status')
+        serializer = ProjectSerializer(project, data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save(status=status)
+            return Response(serializer.data)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
