@@ -5,5 +5,4 @@ from values import views
 urlpatterns = [
     path('', views.ValuesList.as_view()),
     path('user/', views.ValuesListByUser.as_view()),
-    path('<int:pk>/', views.ValuesDetail.as_view()),
 ]

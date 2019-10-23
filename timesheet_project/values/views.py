@@ -13,12 +13,6 @@ class ValuesList(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
 
-class ValuesDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Values.objects.all()
-    serializer_class = ValuesSerializer
-    permission_classes = [IsAuthenticated]
-
-
 class ValuesListByUser(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
@@ -26,3 +20,10 @@ class ValuesListByUser(generics.ListAPIView):
         values = Values.objects.filter(user=request.user.id)
         serializer = ValuesSerializer(values, many=True)
         return Response(serializer.data)
+
+
+class ValuesCreate(generics.CreateAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        self.values.user = request.user.id
