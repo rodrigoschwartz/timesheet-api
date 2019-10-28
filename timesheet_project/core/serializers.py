@@ -14,3 +14,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = '__all__'
         depth = 1
+
+
+class ProjectStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'status')

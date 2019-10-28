@@ -4,5 +4,6 @@ from hours import views
 
 urlpatterns = [
     path('', views.HoursListByUser.as_view()),
-    path('create/', views.HoursCreate.as_view())
+    path('create/', views.HoursCreate.as_view()),
+    path('delete/', views.HoursDelete.as_view()),
 ]

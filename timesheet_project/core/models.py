@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 
 
 STATUS = (
-    ("1", "Planning"),
-    ("2", "Execution"),
-    ("3", "Tests"),
+    ("1", "Planejamento"),
+    ("2", "Execução"),
+    ("3", "Testes"),
     ("4", "Go Live"),
-    ("5", "Finished"),
+    ("5", "Concluído"),
 )
 
 

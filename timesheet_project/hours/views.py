@@ -1,5 +1,5 @@
 from .models import Hours, Project
-from .serializers import HoursSerializer
+from .serializers import HoursSerializer, HoursListSerializer
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status, generics
 from rest_framework.response import Response
@@ -14,7 +14,7 @@ class HoursListByUser(generics.ListAPIView):
 
     def get(self, request, format=None):
         hours = Hours.objects.filter(user=request.user.id)
-        serializer = HoursSerializer(hours, many=True)
+        serializer = HoursListSerializer(hours, many=True)
         return Response(serializer.data)
 
 
@@ -32,3 +32,12 @@ class HoursCreate(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class HoursDelete(generics.DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, format=None):
+        hours = get_object_or_404(Hours, id=request.data.get('id'))
+        hours.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
